@@ -59,7 +59,7 @@ void placeInAverage(int arr[], int user, node_t* head) {
 		iterator = iterator->next;
 	}
 
-	arr[user] = total/i;
+	arr[user] = total;
 }
 
 
@@ -89,10 +89,11 @@ int main(int argc, char *argv[]) {
 	placeInAverage(currentAverages,3,stanleyData);
 	
 	for (int i = 0; i< 4; i++) {
-		printf("hello\n");
+		printf("Current Average %d\n",i);
 		printf("%d\n",currentAverages[i]);
 	}
 }
+
 
 
 
