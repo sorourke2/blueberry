@@ -21,26 +21,27 @@ accessToken = '1205580133244911616-ROLSWOoFbp2uZ88Shxx4TmfXtqr28i'
 accessTokenSecret = 'Jwjtkvlf4REc6pO2j5PUptLVKoh202zBO1ELcc6h7a21A' 
 #api = Twython(apiKey,apiSecret,accessToken,accessTokenSecret) i
 
-
+counter = 0
 class StdOutListener(tweepy.StreamListener):
 
 	def on_status(self, status):
 		print('------------------------------------------')
-
+		#print(status.language)
+		tweetText = "error"
+		#ArrayOfPeopleTheyFollow = API.friends_ids('1234')
 		if hasattr(status, 'retweeted_status'):
 			try:
-				print('Tweet: ' + status.retweeted_status.extended_tweet["full_text"]
+				tweetText = status.retweeted_status.extended_tweet["full_text"]
 			except AttributeError:
-				print('Tweet text:' + status.retweeted_status.text
+				tweetText = status.retweeted_status.text
 		else:
 
 			try:
-				print('Tweeet text: ' + status.full_text);
+				tweetText = status.full_text
 			except AttributeError:
-				print('Tweet text:' + status.text)
-#			for hashtag in status.entries['hashtags']:
-
-#				print(hashtag['text'])
+				tweetText = status.text
+		print(tweetText)
+		counter+=1
 		return True
 
 
@@ -57,8 +58,9 @@ if __name__ == '__main__':
 	tweety = tweepy.OAuthHandler(apiKey, apiSecret)
 	tweety.set_access_token(accessToken, accessTokenSecret)
 	#api.update_status(status=tweetStr)
-	stream = tweepy.Stream(tweety, listener, tweet_mode = 'extended')
-	stream.filter(track=['#maga'])
+	API = tweepy.API(listener)
+	stream = tweepy.Stream(tweety, listener, tweet_mode = 'extended', languages = ["Russian"])
+	stream.filter(track=["k"], locations=[61, 26.4, 105, 19] )
 	#api = tweepy.API(tweety)
 	#results = api.search(q='from:realDonaldTrump')
 
